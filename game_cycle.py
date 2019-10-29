@@ -12,8 +12,9 @@ f = open(path, 'w')
 f.write("{0:13}{1:10}{2:10}\n".format("Number","Step_old","Step_new"))
 
 	
-for bla in myList:
+for bla in myList: #range(100)
 	cur_numb = game_analys.NewGame(bla[0], mode=1, old_step=bla[1])
+	#cur_numb = game_analys.NewGame(0, mode=1)
 
 	flag = True if cur_numb.start != "123456789" else False
 	while flag:
