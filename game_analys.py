@@ -41,18 +41,22 @@ def zeroing(number, pos, q=0):
             number.make_move(pos, "-")
         else:
             break
-    if flag != 1 and q != 0:
+    if flag != 1 and pos == 9:
+        for j in range(8, 1, -1):
+            zeroing(number, j)
+    elif flag != 1 and q != 0:
         rep = pos if number.gameList[pos - 2] == 0 else pos + 1
         for j in range(2, rep):
             zeroing(number, j)
 
 
 def not_problem(number):
-    for i in range(2, 10):
+    upd = [i for i in range(2,10) if i not in problemator(number)]
+    for i in upd:
         zeroing(number, i)
         sw = i if number.gameList[i - 2] == 0 else i + 1
         for j in range(2, sw):
-            zeroing(number, j, 1)
+            zeroing(number, j, j)
 
 
 def problemator(number):
@@ -110,7 +114,7 @@ class NewGame:
                         self.make_move(i + 1, "-")
                         zeroing(self, problem[0])
                     elif self.gameList[i] == 0 and i + 1 < problem[0]:
-                        for j in range(problem[0]): self.make_move(i + 1, "-")  # print("tut")
+                        for j in range(10-problem[0]): self.make_move(i + 1, "-")  # print("tut")
                         self.make_move(i + 1, "+")
                         zeroing(self, problem[0])
                     else:
@@ -124,5 +128,16 @@ class NewGame:
                     else:
                         for j in range(1, i + 1):
                             self.make_move(9, "+")
+                            break
                 self.make_move(9, "-")
             if list_int(self.gameList[1:-1]) == 0 and self.gameList[-1] == 9: self.make_move(2, "-")
+
+        if not self.mode:
+            if self.gameList[0] != 1:
+                for i in range(self.gameList[0], 10):  # когда не 0 только первый
+                    self.make_move(i, "+")
+                    self.make_move(i, "-")
+            else:
+                for i in range(9):  # когда первый 1
+                    self.make_move(2, "+")
+                    self.make_move(2, "-")
